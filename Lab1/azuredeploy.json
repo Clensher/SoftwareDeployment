@@ -1,0 +1,92 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "mywebappfarmName": {
+            "type": "string",
+            "minLength": 1
+        },
+        "mywebappfarmSKU": {
+            "type": "string",
+            "allowedValues": [
+                "Free",
+                "Shared",
+                "Basic",
+                "Standard"
+            ],
+            "defaultValue": "Free"
+        },
+        "mywebappfarmWorkerSize": {
+            "type": "string",
+            "allowedValues": [
+                "0",
+                "1",
+                "2"
+            ],
+            "defaultValue": "0"
+        },
+        "mystorageType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_ZRS",
+                "Standard_GRS",
+                "Standard_RAGRS",
+                "Premium_LRS"
+            ]
+        }
+    },
+    "resources": [
+        {
+            "name": "[parameters('mywebappfarmName')]",
+            "type": "Microsoft.Web/serverfarms",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2014-06-01",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "mywebappfarm"
+            },
+            "properties": {
+                "name": "[parameters('mywebappfarmName')]",
+                "sku": "[parameters('mywebappfarmSKU')]",
+                "workerSize": "[parameters('mywebappfarmWorkerSize')]",
+                "numberOfWorkers": 1
+            }
+        },
+        {
+            "name": "[variables('mywebappName')]",
+            "type": "Microsoft.Web/sites",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-08-01",
+            "dependsOn": [
+                "[concat('Microsoft.Web/serverfarms/', parameters('mywebappfarmName'))]"
+            ],
+            "tags": {
+                "[concat('hidden-related:', resourceGroup().id, '/providers/Microsoft.Web/serverfarms/', parameters('mywebappfarmName'))]": "Resource",
+                "displayName": "mywebapp"
+            },
+            "properties": {
+                "name": "[variables('mywebappName')]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms/', parameters('mywebappfarmName'))]"
+            }
+        },
+        {
+            "name": "[variables('mystorageName')]",
+            "type": "Microsoft.Storage/storageAccounts",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2015-06-15",
+            "dependsOn": [],
+            "tags": {
+                "displayName": "mystorage"
+            },
+            "properties": {
+                "accountType": "[parameters('mystorageType')]"
+            }
+        }
+    ],
+    "variables": {
+        "mywebappName": "[concat('mywebapp', uniqueString(resourceGroup().id))]",
+        "mystorageName": "[concat('mystorage', uniqueString(resourceGroup().id))]"
+    }
+}
