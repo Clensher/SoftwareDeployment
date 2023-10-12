@@ -34,9 +34,9 @@ I used this [Tutorial](https://learn.microsoft.com/en-us/azure/azure-resource-ma
 
 - deploy template:
     ```bash
-    templateFile="{provide-the-path-to-the-template-file}"
+    templateFile="azuredeploy.json"
     az deployment group create \
-        --name blanktemplate \
-        --resource-group myResourceGroup \
+        --name myTemplate \
+        --resource-group softwareDeploymentLab \
         --template-file $templateFile
     ```
