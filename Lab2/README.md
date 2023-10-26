@@ -2,6 +2,7 @@
 
 - [Links](#links)
 - [Pipeline](#pipeline)
+- [Release Documentation](#release-documentation)
 
 
 ## Links
@@ -22,3 +23,5 @@ successful and failed deployments:
 ## Release Documentation
 
 every time the main branch gets a new commit the pipeline gets triggered. The pipeline will run the tests and build the site. If they pass it gets deployed to the dev site. The commit only gets deployed to the prod site if all tests are passed and it gets approved.
+
+![](images/approval.png)
