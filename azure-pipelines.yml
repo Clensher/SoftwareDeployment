@@ -17,6 +17,9 @@ variables:
   # Environment name
   environmentName: 'express823476'
 
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
 stages:
 - stage: Build
   displayName: Build stage
@@ -24,7 +27,7 @@ stages:
   - job: Build
     displayName: Build
     pool:
-      name: Default
+      vmImage: $(vmImageName)
 
     steps:
     - task: NodeTool@0
