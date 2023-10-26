@@ -9,13 +9,13 @@ trigger:
 variables:
 
   # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '07e83fef-78b9-401f-8a32-70fc8bd4517b'
+  azureSubscription: 'b843f251-1ad1-4923-a0fa-15b01434c4c1'
 
   # Web app name
-  webAppName: 'express823476'
+  webAppName: 'express823476prod'
 
   # Environment name
-  environmentName: 'express823476'
+  environmentName: 'express823476prod'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -68,7 +68,7 @@ stages:
         deploy:
           steps:
           - task: AzureWebApp@1
-            displayName: 'Azure Web App Deploy: express823476'
+            displayName: 'Azure Web App Deploy: express823476prod'
             inputs:
               azureSubscription: $(azureSubscription)
               appType: webAppLinux
