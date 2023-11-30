@@ -1,7 +1,15 @@
 # Teil1
 
-To start the container run `docker-compose up -d` or `podman-compose up -d` if using podman in the directory Teil1. Wordpress can then be reached with ``localhost:8080`
+Erstellung eines Docker-Compose files welche Wordpress und MySQL images verwendet um eine Wordpress Container infrastruktur aufzusetzen.
+
+Um die container zu starten `docker-compose up -d` im Ordner Teil1 ausführen, oder `podman-compose up -d` wenn man podman benutzt. Wordpress ist dann unter dem Port `8080` erreichbar
+
+
 
 # Teil2
 
-To start the container run `docker-compose up -d` or `podman-compose up -d` if using podman in the directory Teil2. Wordpress can then be reached with ``localhost:8080`
+Erstellung eigener Images auf basis von debian für eine Wordpress container installation:
+- Apache + PHP + Wordpress
+- MySQL
+
+Um die container zu starten `docker-compose up -d` im Ordner Teil2 ausführen, oder `podman-compose up -d` wenn man podman benutzt. Wordpress ist dann unter dem Port `8080` erreichbar
