@@ -1,0 +1,35 @@
+networks:
+  web:
+volumes:
+  db:
+  wp:
+
+services:
+  db:
+    build: ./mysql
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DB: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASS: wordpress
+    networks:
+      - web
+  wordpress:
+    depends_on:
+      - db
+    build: ./wordpress
+    ports:
+      - '8080:80'
+    volumes:
+      - wp:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASS: wordpress
+      WORDPRESS_DB: wordpress
+    networks:
+      - web

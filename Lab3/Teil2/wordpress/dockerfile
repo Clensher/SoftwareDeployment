@@ -1,0 +1,35 @@
+FROM debian
+
+ARG WORDPRESS_DB
+ARG WORDPRESS_DB_USER
+ARG WORDPRESS_DB_PASS
+ARG WORDPRESS_DB_HOST
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV container docker
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+RUN apt-get install -y wget
+
+RUN apt-get install ca-certificates apt-transport-https -y
+RUN apt-get install apache2 -y
+
+RUN apt-get update -y
+RUN apt-get install php php-mysql libapache2-mod-php -y
+
+RUN apt-get install unzip -y
+
+RUN mkdir /tmp/src
+WORKDIR /tmp/src
+
+RUN wget https://wordpress.org/latest.zip
+RUN unzip -q latest.zip
+RUN rm latest.zip
+RUN mv wordpress/wp-config-sample.php wordpress/wp-config.php
+
+EXPOSE 80/tcp
+VOLUME /var/www/html/wordpress
+WORKDIR /
+COPY ./entrypoint.sh /
+ENTRYPOINT [ "./entrypoint.sh" ]
